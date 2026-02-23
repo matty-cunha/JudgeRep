@@ -440,7 +440,7 @@
           (merge case-data {
             ruling:                ruling,
             ruling-rationale-hash: ruling-rationale-hash,
-            closed-at:             block-height,
+            closed-at:             stacks-block-height,
             is-closed:             true
           })
         )
@@ -505,7 +505,7 @@
 
         (map-set satisfaction-scores
           { case-id: case-id, scorer: tx-sender }
-          { score: score, submitted-at: block-height }
+          { score: score, submitted-at: stacks-block-height }
         )
 
         ;; Aggregate onto arbitrator profile
@@ -549,7 +549,7 @@
         )
         ;; Must be within the post-ruling challenge window
         (asserts!
-          (<= block-height (+ (get closed-at case-data) CHALLENGE-WINDOW-BLOCKS))
+          (<= stacks-block-height (+ (get closed-at case-data) CHALLENGE-WINDOW-BLOCKS))
           ERR-CHALLENGE-WINDOW
         )
 
@@ -558,7 +558,7 @@
           {
             challenger:    tx-sender,
             reason-hash:   reason-hash,
-            challenged-at: block-height,
+            challenged-at: stacks-block-height,
             resolved:      false,
             upheld:        false,
             resolver:      CONTRACT-OWNER
